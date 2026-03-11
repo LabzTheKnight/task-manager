@@ -1,0 +1,42 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+model User {
+  id           Int    @id @default(autoincrement())
+  email        String @unique
+  passwordHash String
+  teams        Team[]
+}
+
+model Task {
+  id      Int        @id @default(autoincrement())
+  title   String
+  status  TaskStatus @default(TODO)
+  boardId Int
+  board   Board      @relation(fields: [boardId], references: [id], onDelete: Cascade)
+}
+
+model Board {
+  id     Int    @id @default(autoincrement())
+  teamId Int
+  team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  tasks  Task[]
+}
+
+model Team {
+  id     Int     @id @default(autoincrement())
+  name   String
+  users  User[]
+  boards Board[]
+}
