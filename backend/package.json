@@ -5,6 +5,9 @@
   "scripts": {
     "start": "tsx server.ts",
     "dev": "tsx watch server.ts",
+    "prisma:generate": "prisma generate --config ./prisma.config.ts",
+    "prisma:migrate": "prisma migrate dev --config ./prisma.config.ts",
+    "prisma:status": "prisma migrate status --config ./prisma.config.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -14,6 +17,7 @@
   "dependencies": {
     "@prisma/client": "^7.4.2",
     "cors": "^2.8.6",
+    "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "prisma": "^7.4.2"
   },
