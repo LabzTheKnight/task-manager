@@ -1,5 +1,7 @@
 import express, { Request, Response } from "express";
 
+import { requireAuth } from "../middleware/auth";
+
 const router = express.Router();
 
 type Board = {
@@ -39,7 +41,7 @@ router.get('/tasks/:id', (req: Request, res: Response) => {
 });
 
 // Create task
-router.post('/tasks', (req: Request, res: Response) => {
+router.post('/tasks', requireAuth, (req: Request, res: Response) => {
     const title = req.body?.title;
     const boardId = Number(req.body?.boardId);
     const boardPayload = req.body?.board as Board | undefined;
@@ -90,7 +92,7 @@ router.post('/tasks', (req: Request, res: Response) => {
 });
 
 // Update task
-router.put('/tasks/:id', (req: Request, res: Response) => {
+router.put('/tasks/:id', requireAuth, (req: Request, res: Response) => {
     const id = Number(req.params.id);
     const index = tasks.findIndex((item) => item.id === id);
 
@@ -114,7 +116,7 @@ router.put('/tasks/:id', (req: Request, res: Response) => {
 });
 
 // Delete task
-router.delete('/tasks/:id', (req: Request, res: Response) => {
+router.delete('/tasks/:id', requireAuth, (req: Request, res: Response) => {
     const id = Number(req.params.id);
     const index = tasks.findIndex((item) => item.id === id);
 

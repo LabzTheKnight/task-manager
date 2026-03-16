@@ -3,6 +3,7 @@ import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
 
+import authRouter from './APIs/auth';
 import tasksRouter from './APIs/tasks';
 
 const app = express();
@@ -10,6 +11,7 @@ const port = Number(process.env.PORT) || 3000;
 
 app.use(cors());
 app.use(express.json());
+app.use(authRouter);
 app.use(tasksRouter);
 
 app.get('/', (_req, res) => {
